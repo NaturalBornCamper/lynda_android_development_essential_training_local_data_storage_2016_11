@@ -18,19 +18,12 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tvOut;
     List<DataItem> dataItemList = SampleDataProvider.dataItemList;
-
     List<String> itemNames = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        DataItem item = new DataItem(null, "My menu item", "a category", "a descrition", 1, 9.95, "apple_pie.jpg");
-
-//        tvOut = (TextView) findViewById(R.id.out);
-//        tvOut.setText("");
 
 //        Collections.sort(dataItemList, new Comparator<DataItem>() {
 //            @Override
@@ -40,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         for (DataItem item: dataItemList){
-//            tvOut.append(item.getItemName() + "\n");
             itemNames.add(item.getItemName());
         }
         Collections.sort(itemNames);
