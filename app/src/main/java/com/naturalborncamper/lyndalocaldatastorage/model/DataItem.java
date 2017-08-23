@@ -1,9 +1,12 @@
 package com.naturalborncamper.lyndalocaldatastorage.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.UUID;
 
-public class DataItem {
+public class DataItem implements Parcelable {
     private String itemId;
     private String itemName;
     private String description;
@@ -96,4 +99,42 @@ public class DataItem {
                 ", image='" + image + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.itemId);
+        dest.writeString(this.itemName);
+        dest.writeString(this.description);
+        dest.writeString(this.category);
+        dest.writeInt(this.sortPosition);
+        dest.writeDouble(this.price);
+        dest.writeString(this.image);
+    }
+
+    protected DataItem(Parcel in) {
+        this.itemId = in.readString();
+        this.itemName = in.readString();
+        this.description = in.readString();
+        this.category = in.readString();
+        this.sortPosition = in.readInt();
+        this.price = in.readDouble();
+        this.image = in.readString();
+    }
+
+    public static final Parcelable.Creator<DataItem> CREATOR = new Parcelable.Creator<DataItem>() {
+        @Override
+        public DataItem createFromParcel(Parcel source) {
+            return new DataItem(source);
+        }
+
+        @Override
+        public DataItem[] newArray(int size) {
+            return new DataItem[size];
+        }
+    };
 }
