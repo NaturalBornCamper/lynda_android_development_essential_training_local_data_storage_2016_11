@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.naturalborncamper.lyndalocaldatastorage.MainActivity">
 
-    <ListView
-        android:id="@android:id/list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvItems"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layoutManager="LinearLayoutManager"/>
 
 </android.support.constraint.ConstraintLayout>
