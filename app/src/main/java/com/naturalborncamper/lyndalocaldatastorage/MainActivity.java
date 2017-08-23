@@ -1,10 +1,14 @@
 package com.naturalborncamper.lyndalocaldatastorage;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.naturalborncamper.lyndalocaldatastorage.model.DataItem;
 import com.naturalborncamper.lyndalocaldatastorage.sample.SampleDataProvider;
@@ -16,6 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int SIGNIN_REQUEST = 1001;
     private TextView tvOut;
     List<DataItem> dataItemList = SampleDataProvider.dataItemList;
     List<String> itemNames = new ArrayList<>();
@@ -32,18 +37,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        for (DataItem item: dataItemList){
-//            itemNames.add(item.getItemName());
-//        }
-//        Collections.sort(itemNames);
-
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-//                this, android.R.layout.simple_list_item_1, itemNames
-//        );
-
         DataItemAdapter adapter = new DataItemAdapter(this, dataItemList);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvItems);
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_signin:
+                Intent intent = new Intent(this, SigninActivity.class);
+                startActivityForResult(intent, SIGNIN_REQUEST);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == SIGNIN_REQUEST){
+            String email = data.getStringExtra(SigninActivity.EMAIL_KEY);
+            Toast.makeText(this, "You signed in as: " + email, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
