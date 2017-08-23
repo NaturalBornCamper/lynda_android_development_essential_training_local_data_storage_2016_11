@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.naturalborncamper.lyndalocaldatastorage.model.DataItem;
 
@@ -34,8 +35,8 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(DataItemAdapter.ViewHolder holder, int position) {
-        DataItem item = mItems.get(position);
+    public void onBindViewHolder(final DataItemAdapter.ViewHolder holder, int position) {
+        final DataItem item = mItems.get(position);
 
         try {
             holder.tvName.setText(item.getItemName());
@@ -46,6 +47,21 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "You selected: " + item.getItemName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(mContext, "You long clicked: " + item.getItemName(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -57,11 +73,13 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
 
         public TextView tvName;
         public ImageView imageView;
+        public View mView;
         public ViewHolder(View itemView) {
             super(itemView);
 
             tvName = (TextView) itemView.findViewById(R.id.itemNameText);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
+            mView = itemView;
         }
     }
 }
