@@ -1,0 +1,23 @@
+package com.naturalborncamper.lyndalocaldatastorage;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Toast;
+
+import com.naturalborncamper.lyndalocaldatastorage.model.DataItem;
+import com.naturalborncamper.lyndalocaldatastorage.sample.SampleDataProvider;
+
+public class DetailActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail);
+
+        String itemId = getIntent().getExtras().getString(DataItemAdapter.ITEM_ID_KEY);
+        DataItem item = SampleDataProvider.dataItemMap.get(itemId);
+        Toast.makeText(this, "Received item: " + item.getItemName(), Toast.LENGTH_SHORT).show();
+
+
+    }
+}
