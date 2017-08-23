@@ -1,6 +1,7 @@
 package com.naturalborncamper.lyndalocaldatastorage;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final int SIGNIN_REQUEST = 1001;
+    public static final String MY_GLOBAL_PREFS = "my_global_prefs";
     private TextView tvOut;
     List<DataItem> dataItemList = SampleDataProvider.dataItemList;
     List<String> itemNames = new ArrayList<>();
@@ -67,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == SIGNIN_REQUEST){
             String email = data.getStringExtra(SigninActivity.EMAIL_KEY);
             Toast.makeText(this, "You signed in as: " + email, Toast.LENGTH_SHORT).show();
+
+            SharedPreferences.Editor editor = getSharedPreferences(MY_GLOBAL_PREFS, MODE_PRIVATE).edit();
+            editor.putString(SigninActivity.EMAIL_KEY, email);
+            editor.apply();
         }
     }
 

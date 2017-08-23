@@ -3,6 +3,7 @@ package com.naturalborncamper.lyndalocaldatastorage;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -57,6 +58,13 @@ public class SigninActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
+
+        SharedPreferences prefs = getSharedPreferences(MainActivity.MY_GLOBAL_PREFS, MODE_PRIVATE);
+        String email = prefs.getString(EMAIL_KEY, "");
+
+        if (!TextUtils.isEmpty(email)){
+            mEmailView.setText(email);
+        }
     }
 
 
