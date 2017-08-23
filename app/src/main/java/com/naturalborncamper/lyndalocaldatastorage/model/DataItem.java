@@ -9,8 +9,8 @@ import java.util.UUID;
 public class DataItem implements Parcelable {
     private String itemId;
     private String itemName;
-    private String description;
     private String category;
+    private String description;
     private int sortPosition;
     private double price;
     private String image;
@@ -18,14 +18,14 @@ public class DataItem implements Parcelable {
     public DataItem() {
     }
 
-    public DataItem(String itemId, String itemName, String description, String category, int sortPosition, double price, String image) {
+    public DataItem(String itemId, String itemName, String category, String description, int sortPosition, double price, String image) {
         if (itemId == null)
             itemId = UUID.randomUUID().toString();
 
         this.itemId = itemId;
         this.itemName = itemName;
-        this.description = description;
         this.category = category;
+        this.description = description;
         this.sortPosition = sortPosition;
         this.price = price;
         this.image = image;
@@ -47,20 +47,20 @@ public class DataItem implements Parcelable {
         this.itemName = itemName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getSortPosition() {
@@ -92,8 +92,8 @@ public class DataItem implements Parcelable {
         return "DataItem{" +
                 "itemId='" + itemId + '\'' +
                 ", itemName='" + itemName + '\'' +
-                ", description='" + description + '\'' +
                 ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
                 ", sortPosition=" + sortPosition +
                 ", price=" + price +
                 ", image='" + image + '\'' +
@@ -109,8 +109,8 @@ public class DataItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.itemId);
         dest.writeString(this.itemName);
-        dest.writeString(this.description);
         dest.writeString(this.category);
+        dest.writeString(this.description);
         dest.writeInt(this.sortPosition);
         dest.writeDouble(this.price);
         dest.writeString(this.image);
@@ -119,8 +119,8 @@ public class DataItem implements Parcelable {
     protected DataItem(Parcel in) {
         this.itemId = in.readString();
         this.itemName = in.readString();
-        this.description = in.readString();
         this.category = in.readString();
+        this.description = in.readString();
         this.sortPosition = in.readInt();
         this.price = in.readDouble();
         this.image = in.readString();
