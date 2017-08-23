@@ -57,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_signin:
                 Intent intent = new Intent(this, SigninActivity.class);
                 startActivityForResult(intent, SIGNIN_REQUEST);
+                return true;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(this, PrefsActivity.class);
+                startActivity(settingsIntent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

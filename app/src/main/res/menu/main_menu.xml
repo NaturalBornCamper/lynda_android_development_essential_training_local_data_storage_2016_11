@@ -4,6 +4,10 @@
 
     <item
         android:id="@+id/action_signin"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="Sign in" />
+    <item
+        android:id="@+id/action_settings"
+        app:showAsAction="ifRoom"
+        android:title="Settings" />
 </menu>
