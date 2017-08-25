@@ -2,8 +2,10 @@ package com.naturalborncamper.lyndalocaldatastorage;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         DataItemAdapter adapter = new DataItemAdapter(this, dataItemList);
 
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean grid = settings.getBoolean(getString(R.string.pref_display_grid), false);
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvItems);
+        if (grid){
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        }
+
         recyclerView.setAdapter(adapter);
     }
 

@@ -3,7 +3,7 @@
 
     <CheckBoxPreference
         android:defaultValue="false"
-        android:key="pref_display_grid"
+        android:key="@string/pref_display_grid"
         android:summary="Display menu data in a multi-column grid"
         android:title="Display in grid" />
 </PreferenceScreen>
