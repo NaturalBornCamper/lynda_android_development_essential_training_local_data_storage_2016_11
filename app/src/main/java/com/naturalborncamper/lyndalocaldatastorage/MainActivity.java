@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         boolean grid = settings.getBoolean(getString(R.string.pref_display_grid), false);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvItems);
-        if (grid){
+        if (grid) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         }
 
@@ -74,16 +74,24 @@ public class MainActivity extends AppCompatActivity {
                 Intent settingsIntent = new Intent(this, PrefsActivity.class);
                 startActivity(settingsIntent);
                 return true;
+            case R.id.action_export:
+                if (JSONHelper.exportToJSON(this, dataItemList))
+                    Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_import:
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == SIGNIN_REQUEST){
+        if (resultCode == RESULT_OK && requestCode == SIGNIN_REQUEST) {
             String email = data.getStringExtra(SigninActivity.EMAIL_KEY);
             Toast.makeText(this, "You signed in as: " + email, Toast.LENGTH_SHORT).show();
 

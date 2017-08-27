@@ -10,4 +10,12 @@
         android:id="@+id/action_settings"
         app:showAsAction="ifRoom"
         android:title="Settings" />
+    <item
+        android:id="@+id/action_export"
+        app:showAsAction="collapseActionView"
+        android:title="Export" />
+    <item
+        android:id="@+id/action_import"
+        app:showAsAction="collapseActionView"
+        android:title="Import" />
 </menu>
