@@ -2,6 +2,8 @@ package com.naturalborncamper.lyndalocaldatastorage;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.naturalborncamper.lyndalocaldatastorage.database.DBHelper;
 import com.naturalborncamper.lyndalocaldatastorage.model.DataItem;
 import com.naturalborncamper.lyndalocaldatastorage.sample.SampleDataProvider;
 
@@ -34,10 +37,17 @@ public class MainActivity extends AppCompatActivity {
     List<DataItem> dataItemList = SampleDataProvider.dataItemList;
     List<String> itemNames = new ArrayList<>();
 
+    SQLiteDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Casting a DBHelper in a SQLiteOpenHelper, so that methods of the superclass are available
+        SQLiteOpenHelper dbHelper = new DBHelper(this);
+        database = dbHelper.getWritableDatabase();
+        Toast.makeText(this, "Database acquired!", Toast.LENGTH_SHORT).show();
 
         Collections.sort(dataItemList, new Comparator<DataItem>() {
             @Override
