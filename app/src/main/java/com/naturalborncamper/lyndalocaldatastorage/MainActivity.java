@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int SIGNIN_REQUEST = 1001;
     public static final String MY_GLOBAL_PREFS = "my_global_prefs";
+    private static final String TAG = "MainActivity";
     private TextView tvOut;
     List<DataItem> dataItemList = SampleDataProvider.dataItemList;
     List<String> itemNames = new ArrayList<>();
@@ -81,6 +83,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_import:
+                List<DataItem> dataItems = JSONHelper.importFromJSON(this);
+                if (dataItems != null)
+                {
+                    for (DataItem dataItem:
+                            dataItems) {
+                        Log.i(TAG, "onOptionsItemSelected: " + dataItem.getItemName());
+                    }
+                }
+                else
+                    Toast.makeText(this, "Fucke, export failed", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
