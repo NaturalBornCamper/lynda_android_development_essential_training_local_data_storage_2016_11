@@ -69,7 +69,13 @@ public class DataSource {
     {
         List<DataItem> dataItems = new ArrayList<>();
 
-        Cursor cursor = mDatabase.query(ItemsTable.TABLE_ITEMS, ItemsTable.ALL_COLUMNS, null, null, null, null, null);
+        String[] categories = {"Salads"};
+        Cursor cursor = mDatabase.query(ItemsTable.TABLE_ITEMS, ItemsTable.ALL_COLUMNS,
+                ItemsTable.COLUMN_CATEGORY + "=?", // Where string with question mark being placeholders
+                categories, // For each question mark placeholder, this array must have an item
+                null,
+                null,
+                ItemsTable.COLUMN_NAME); // Order by
 
         while (cursor.moveToNext()) {
             DataItem item = new DataItem();
@@ -89,6 +95,9 @@ public class DataSource {
                     cursor.getColumnIndex(ItemsTable.COLUMN_IMAGE)));
             dataItems.add(item);
         }
+
+        cursor.close(); // Important
+
         return dataItems;
     }
 }
