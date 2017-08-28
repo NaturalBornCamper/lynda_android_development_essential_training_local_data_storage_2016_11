@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.naturalborncamper.lyndalocaldatastorage.database.DBHelper;
+import com.naturalborncamper.lyndalocaldatastorage.database.DataSource;
 import com.naturalborncamper.lyndalocaldatastorage.model.DataItem;
 import com.naturalborncamper.lyndalocaldatastorage.sample.SampleDataProvider;
 
@@ -37,18 +38,35 @@ public class MainActivity extends AppCompatActivity {
     List<DataItem> dataItemList = SampleDataProvider.dataItemList;
     List<String> itemNames = new ArrayList<>();
 
-    SQLiteDatabase database;
+    DataSource mDataSource;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Casting a DBHelper in a SQLiteOpenHelper, so that methods of the superclass are available
-        SQLiteOpenHelper dbHelper = new DBHelper(this);
-        database = dbHelper.getWritableDatabase();
+        mDataSource = new DataSource(this);
+        mDataSource.open();
         Toast.makeText(this, "Database acquired!", Toast.LENGTH_SHORT).show();
 
+        long numItems = mDataSource.getDataItemsCount();
+        if (numItems == 0) {
+            for (DataItem item:
+                    dataItemList) {
+                try {
+                    mDataSource.createItem(item);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            Toast.makeText(this, "Data inserted", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Data already inserted", Toast.LENGTH_SHORT).show();
+        }
+        
         Collections.sort(dataItemList, new Comparator<DataItem>() {
             @Override
             public int compare(DataItem o1, DataItem o2) {
@@ -67,6 +85,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         recyclerView.setAdapter(adapter);
+    }
+
+    // VERY IMPORTANT TO AVOID DATABASE LEAKS WITH CONNECTION STAYING OPENED
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mDataSource.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDataSource.open();
     }
 
     @Override

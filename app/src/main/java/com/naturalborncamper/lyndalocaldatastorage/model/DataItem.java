@@ -1,8 +1,11 @@
 package com.naturalborncamper.lyndalocaldatastorage.model;
 
 
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.naturalborncamper.lyndalocaldatastorage.database.ItemsTable;
 
 import java.util.UUID;
 
@@ -85,6 +88,21 @@ public class DataItem implements Parcelable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public ContentValues toValues() {
+        // Make an object with 7 values in. Could be an empty constructor but it's a bit faster if we set it
+        ContentValues values = new ContentValues(7);
+
+        values.put(ItemsTable.COLUMN_ID, itemId);
+        values.put(ItemsTable.COLUMN_NAME, itemName);
+        values.put(ItemsTable.COLUMN_DESCRIPTION, description);
+        values.put(ItemsTable.COLUMN_CATEGORY, category);
+        values.put(ItemsTable.COLUMN_POSITION, sortPosition);
+        values.put(ItemsTable.COLUMN_PRICE, price);
+        values.put(ItemsTable.COLUMN_IMAGE, image);
+
+        return values;
     }
 
     @Override
